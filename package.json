@@ -1,0 +1,15 @@
+{
+  "name": "go-wasm",
+  "version": "0.0.2",
+  "description": "go WebAssembly lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@alphatr/eslint-config-node": "^2.0.0",
+    "eslint": "^5.8.0"
+  }
+}
