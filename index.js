@@ -1,9 +1,6 @@
-const nodeUtils = require("./node");
-const browserUtils = require("./browser");
-
 const isNodeJS = global.process && global.process.title === "node";
 
-const utils = isNodeJS ? nodeUtils : browserUtils;
+const utils = isNodeJS ? require("./node") : require("./browser");
 
 const encoder = new utils.TextEncoder("utf-8");
 const decoder = new utils.TextDecoder("utf-8");
@@ -195,7 +192,6 @@ const Go = class {
 
                 // func valueGet(v ref, p string) ref
                 "syscall/js.valueGet": sp => {
-                    console.log(sp + 8, loadString(sp + 16));
                     storeValue(sp + 32, Reflect.get(loadValue(sp + 8), loadString(sp + 16)));
                 },
 
@@ -342,13 +338,10 @@ const Go = class {
                     setTimeout(resolve, 0); // make sure it is asynchronous
                 };
             });
-            console.log("before-run");
             this._inst.exports.run(argc, argv);
             if (this.exited) {
-                console.log("exit-run");
                 break;
             }
-            console.log("after-run");
             await callbackPromise;
         }
     }
@@ -376,6 +369,8 @@ const Go = class {
     }
 };
 
+global.Go = Go;
+global.fs = utils.fs;
 module.exports = {
     Go
 };
